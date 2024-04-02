@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationHelper {
@@ -20,7 +22,11 @@ class AuthenticationHelper {
   //SIGN IN METHOD
   Future signIn({required String email, required String password}) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      var creds = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      var id = creds.user?.uid;
+      log(id.toString());
+
       return null;
     } on FirebaseAuthException catch (e) {
       return e.message;

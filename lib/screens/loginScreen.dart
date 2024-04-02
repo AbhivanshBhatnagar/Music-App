@@ -82,7 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: passwordController.text)
                           .then((result) {
                         if (result == null) {
-                          Navigator.pushReplacementNamed(context, '/home');
+                          Navigator.pushReplacementNamed(
+                            context,
+                            '/home',
+                          );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text(
