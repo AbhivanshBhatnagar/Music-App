@@ -4,7 +4,7 @@ class AuthenticationHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   get user => _auth.currentUser;
 
- //SIGN UP METHOD
+  //SIGN UP METHOD
   Future signUp({required email, required password}) async {
     try {
       await _auth.createUserWithEmailAndPassword(
@@ -18,7 +18,7 @@ class AuthenticationHelper {
   }
 
   //SIGN IN METHOD
-signIn({required String email, required String password}) async {
+  Future signIn({required String email, required String password}) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return null;

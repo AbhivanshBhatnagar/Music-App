@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_app_task/screens/homeScreen.dart';
 import 'package:music_app_task/screens/loginScreen.dart';
 
 class App extends StatelessWidget {
@@ -8,8 +9,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Music App',
-      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/home': (context) => ListScreen(),
+      },
     );
   }
 }
