@@ -1,11 +1,10 @@
 import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:music_app_task/constants/designConstants.dart';
 import 'package:music_app_task/models/song_model.dart';
+import 'package:music_app_task/widgets/songImage.dart';
 
 class DetailsScreen extends StatefulWidget {
   DetailsScreen({required Song song, required this.tag}) {
@@ -55,12 +54,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
     String urlPlay = url;
     player.setSourceUrl(urlPlay);
     player.play(UrlSource(urlPlay));
-
-    // final audio = AudioCache(prefix: 'assets/');
-    // final url = await audio.load("song.mp3");
-    // player.play(AssetSource('songs/song1.mp3'));
   }
 
+  DesignConstants design = DesignConstants();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +64,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         backgroundColor: Colors.transparent,
         title: Text(
           'Music Player',
-          style: GoogleFonts.poppins(color: Colors.white70),
+          style: design.detailsScreenTitleStyle,
         ),
       ),
       body: Container(
@@ -88,15 +84,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: Hero(
                   tag: widget.tag,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      widget.selectedSong.image,
-                      height: 250,
-                      width: 250,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                  child: SongImage(widget: widget),
                 ),
               ),
               Padding(
@@ -109,17 +97,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       children: [
                         Text(
                           widget.selectedSong.title,
-                          style: GoogleFonts.poppins(
-                              fontSize: 25, color: Colors.white70),
+                          style: design.detailsScreenTitleStyle,
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        Text(
-                          widget.selectedSong.artist,
-                          style: GoogleFonts.poppins(
-                              fontSize: 20, color: Colors.white70),
-                        ),
+                        Text(widget.selectedSong.artist,
+                            style: design.detailsScreenArtistStyle),
                       ],
                     ),
                   ],
@@ -147,9 +131,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             .first
                             .substring(3)
                             .padLeft(5, "0"),
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white70)),
+                        style: design.detailsScreenPositionStyle),
                     Text(
                         Duration(
                                 seconds:
@@ -159,8 +141,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             .first
                             .substring(3)
                             .padLeft(5, "0"),
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500, color: Colors.white70))
+                        style: design.detailsScreenDurationStyle)
                   ],
                 ),
               ),
@@ -184,7 +165,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       }
                     },
                     icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow)),
-              )
+              ),
             ],
           ),
         ),

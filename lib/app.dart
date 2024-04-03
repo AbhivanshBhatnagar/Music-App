@@ -8,12 +8,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Music App',
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => LoginScreen(),
-        '/home': (context) => ListScreen(),
-      },
-    );
+        title: 'Music App',
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (context) => LoginScreen(),
+        });
   }
 }

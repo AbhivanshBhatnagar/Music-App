@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_app_task/constants/designConstants.dart';
+import 'package:music_app_task/screens/homeScreen.dart';
 import 'package:music_app_task/services/authHelper.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -81,11 +82,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               email: emailController.text,
                               password: passwordController.text)
                           .then((result) {
-                        if (result == null) {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            '/home',
-                          );
+                        if (result != null) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ListScreen(
+                                        result: result,
+                                      )));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text(

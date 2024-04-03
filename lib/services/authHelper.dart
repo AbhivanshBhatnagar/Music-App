@@ -3,10 +3,9 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationHelper {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  get user => _auth.currentUser;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  String userId = '';
 
-  //SIGN UP METHOD
   Future signUp({required email, required password}) async {
     try {
       await _auth.createUserWithEmailAndPassword(
@@ -25,9 +24,10 @@ class AuthenticationHelper {
       var creds = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       var id = creds.user?.uid;
-      log(id.toString());
+      userId = id.toString();
+      // log(id.toString());
 
-      return null;
+      return userId;
     } on FirebaseAuthException catch (e) {
       return e.message;
     }

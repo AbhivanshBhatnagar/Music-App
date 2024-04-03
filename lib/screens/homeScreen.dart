@@ -1,14 +1,15 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:music_app_task/constants/designConstants.dart';
 import 'package:music_app_task/constants/songsList.dart';
 import 'package:music_app_task/models/song_model.dart';
-import 'package:music_app_task/screens/detailsScreen.dart';
 import 'package:music_app_task/services/authHelper.dart';
+import 'package:music_app_task/widgets/songTile.dart';
 
 class ListScreen extends StatefulWidget {
-  const ListScreen({super.key});
-
+  const ListScreen({super.key, required this.result});
+  final String result;
   @override
   State<ListScreen> createState() => _ListScreenState();
 }
@@ -16,6 +17,7 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   List<Song> songs = SongsList().songs;
   AuthenticationHelper auth = AuthenticationHelper();
+  DesignConstants design = DesignConstants();
   bool _liked = false;
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class _ListScreenState extends State<ListScreen> {
           backgroundColor: Colors.transparent,
           title: Text(
             'Playlist',
-            style: GoogleFonts.poppins(fontSize: 25, color: Colors.white70),
+            style: design.listScreenAppBarStyle,
           ),
           actions: [
             IconButton(
@@ -38,7 +40,7 @@ class _ListScreenState extends State<ListScreen> {
           ],
         ),
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/bg.jpg'), fit: BoxFit.fill),
           ),
@@ -47,40 +49,12 @@ class _ListScreenState extends State<ListScreen> {
             child: ListView.builder(
               itemCount: songs.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return DetailsScreen(
-                            song: songs[index],
-                            tag: index,
-                          );
-                        },
-                      ));
-                    },
-                    title: Text(
-                      songs[index].title,
-                      style: GoogleFonts.poppins(
-                          fontSize: 20, color: Colors.white70),
-                    ),
-                    subtitle: Text(
-                      songs[index].artist,
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Colors.white60),
-                    ),
-                    leading: Hero(
-                        tag: index, child: Image.asset(songs[index].image)),
-                    trailing: IconButton(
-                        onPressed: () {
-                          _liked = !_liked;
-                          setState(() {});
-                        },
-                        icon: _liked
-                            ? Icon(Icons.favorite)
-                            : Icon(Icons.favorite_border)),
-                  ),
+                return SongTile(
+                  userId: widget.result,
+                  songs: songs,
+                  design: design,
+                  liked: _liked,
+                  index: index,
                 );
               },
             ),
